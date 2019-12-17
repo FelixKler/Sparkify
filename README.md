@@ -10,22 +10,22 @@ Udacity Nanodegree Capstone Project
 5. [Licensing, Authors, and Acknowledgements](#licensing)
 
 ### Libraries used <a name="libs"></a>
-
+To run the code the following libraries should be installed: pyspark, pandas, seaborn, matplotlib
 
 ### Project Motivation <a name="motiation"></a>
-As a part of the Data Scientist Nanodegree Program and to enhance my knowledge of cloud computing I chose the Sparkify
-Capstone project. For this I tried to answer the following questions:
-
-1. Is an offensive way of playing more advantageous than a defensive one?
-2. How important is the usage of what items?
-3. Is camping more advantageous than a more agile (moving around) game play?
+As a part of the Data Scientist Nanodegree Program this project uses the spark technology and machine learning to 
+predict churn of a fictional digital music service. I used the following methodology:
+ + Data loading
+ + Defining churn
+ + Explorative data analysis
+ + Modeling (applying 3 different machine learning classification models)
+ + Evaluation
 
 ### File Descriptions <a name="files"></a>
-
+The project is implemented in a jupyter notebook and uses a small subset of data provided by Udacity.
 
 ### Results <a name="results"></a>
-The results are provided in the post [here](https://medium.com/@felix.kler/how-to-win-in-playerunknowns-battleground-c7f780dabc38).
+The results are provided in the jupyter notebook and as a post [here](https://medium.com/@felix.kler/how-to-predict-churn-5d3304bf18).
 
 ### Licensing, Authors, and Acknowledgements <a name="licensing"></a>
-For this I have to give credit to aws???
-
+For this I have to give credit to Udacity to provide me the necessary data.
