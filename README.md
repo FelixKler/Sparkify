@@ -25,7 +25,7 @@ predict churn of a fictional digital music service. I used the following methodo
 The project is implemented in a jupyter notebook and uses a small subset of data provided by Udacity.
 
 ### Results <a name="results"></a>
-The results are provided in the jupyter notebook and as a post [here](https://medium.com/@felix.kler/how-to-predict-churn-5d3304bf18).
+The results are provided in the jupyter notebook and as a post [here](https://medium.com/@felix.kler/how-to-predict-churn-5d3304bf1822).
 
 ### Licensing, Authors, and Acknowledgements <a name="licensing"></a>
 For this I have to give credit to Udacity to provide me the necessary data.
