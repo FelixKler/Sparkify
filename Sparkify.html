@@ -13139,7 +13139,7 @@ div#notebook {
 <span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="k">import</span> <span class="n">SparkSession</span>
 <span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="k">import</span> <span class="n">udf</span><span class="p">,</span> <span class="n">split</span><span class="p">,</span> <span class="n">col</span>
 
-<span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="k">import</span> <span class="n">LogisticRegression</span><span class="p">,</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">GBTClassifier</span> <span class="c1"># , LinearSVC, RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="k">import</span> <span class="n">LogisticRegression</span><span class="p">,</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">GBTClassifier</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.evaluation</span> <span class="k">import</span> <span class="n">MulticlassClassificationEvaluator</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="k">import</span> <span class="n">VectorAssembler</span><span class="p">,</span> <span class="n">StandardScaler</span>
 <span class="kn">from</span> <span class="nn">pyspark.ml.tuning</span> <span class="k">import</span> <span class="n">CrossValidator</span><span class="p">,</span> <span class="n">ParamGridBuilder</span>
@@ -13656,6 +13656,7 @@ only showing top 5 rows
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># transform ts into human readable time format</span>
+<span class="c1"># solution found here https://github.com/fxzero/Sparkify-Project</span>
 <span class="n">get_time</span> <span class="o">=</span> <span class="n">udf</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">))</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">get_time</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">ts</span><span class="p">))</span>
 </pre></div>
@@ -13715,6 +13716,7 @@ only showing top 5 rows
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># add a churn column for users used the &quot;Cancellation Confirmation&quot; page</span>
+<span class="c1"># solution found here: https://github.com/fxzero/Sparkify-Project</span>
 <span class="n">churn_users</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">page</span><span class="o">==</span><span class="s1">&#39;Cancellation Confirmation&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;userId&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">dropDuplicates</span><span class="p">()</span>
 <span class="n">churn_users_list</span> <span class="o">=</span> <span class="p">[(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;userId&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">churn_users</span><span class="o">.</span><span class="n">collect</span><span class="p">()]</span>
 <span class="n">df_c</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;churn&#39;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">userId</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">churn_users_list</span><span class="p">))</span>
@@ -14072,7 +14074,10 @@ only showing top 5 rows
 <div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># songs</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># some solutions and inspirations from </span>
+<span class="c1">#  https://github.com/fxzero/Sparkify-Project and here https://github.com/linpingyu/Sparkify</span>
+
+<span class="c1"># songs</span>
 <span class="n">songs</span> <span class="o">=</span> <span class="n">df_c</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s1">&#39;page == &quot;NextSong&quot;&#39;</span><span class="p">)</span> \
     <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;churn&#39;</span><span class="p">,</span> <span class="s1">&#39;userId&#39;</span><span class="p">,</span> <span class="s1">&#39;sessionId&#39;</span><span class="p">])</span> \
     <span class="o">.</span><span class="n">count</span><span class="p">()</span>  \
@@ -14242,7 +14247,10 @@ only showing top 5 rows
 <div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># songs listened</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># some solutions and inspirations from </span>
+<span class="c1">#  https://github.com/fxzero/Sparkify-Project and here https://github.com/linpingyu/Sparkify</span>
+
+<span class="c1"># songs listened</span>
 <span class="n">songs_listened</span> <span class="o">=</span> <span class="n">df_c</span> \
     <span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;userId&#39;</span><span class="p">,</span><span class="s1">&#39;song&#39;</span><span class="p">,</span> <span class="s1">&#39;churn&#39;</span><span class="p">)</span> \
     <span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s1">&#39;userId&#39;</span><span class="p">,</span> <span class="s1">&#39;churn&#39;</span><span class="p">)</span> \
@@ -14438,6 +14446,7 @@ only showing top 5 rows
 <li>Try your script on the full data set, debugging your script if necessary</li>
 </ul>
 <p>If you are working in the classroom workspace, you can just extract features based on the small subset of data contained here. Be sure to transfer over this work to the larger dataset when you work on your Spark cluster.</p>
+<p>For teh following section I used # some solutions and inspirations from <a href="https://github.com/fxzero/Sparkify-Project">https://github.com/fxzero/Sparkify-Project</a> and <a href="https://github.com/linpingyu/Sparkify">https://github.com/linpingyu/Sparkify</a></p>
 
 </div>
 </div>
@@ -14902,6 +14911,7 @@ only showing top 5 rows
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="5.-Modeling-">5. Modeling <a id="modeling" /><a class="anchor-link" href="#5.-Modeling-">&#182;</a></h1><p><a href="#toc">back</a></p>
 <p>Split the full dataset into train, test, and validation sets. Test out several of the machine learning methods you learned. Evaluate the accuracy of the various models, tuning parameters as necessary. Determine your winning model based on test accuracy and report results on the validation set. Since the churned users are a fairly small subset, I suggest using F1 score as the metric to optimize.</p>
+<p>For the following sections I used # some solutions and inspirations from <a href="https://github.com/fxzero/Sparkify-Project">https://github.com/fxzero/Sparkify-Project</a>, here <a href="https://github.com/linpingyu/Sparkify">https://github.com/linpingyu/Sparkify</a> and <a href="https://mapr.com/blog/churn-prediction-pyspark-using-mllib-and-ml-packages/">https://mapr.com/blog/churn-prediction-pyspark-using-mllib-and-ml-packages/</a></p>
 
 </div>
 </div>
