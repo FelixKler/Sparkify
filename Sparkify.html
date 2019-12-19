@@ -13017,45 +13017,6 @@ ul.typeahead-list  > li > a.pull-right {
 .highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
-<style type="text/css">
-    
-/* Temporary definitions which will become obsolete with Notebook release 5.0 */
-.ansi-black-fg { color: #3E424D; }
-.ansi-black-bg { background-color: #3E424D; }
-.ansi-black-intense-fg { color: #282C36; }
-.ansi-black-intense-bg { background-color: #282C36; }
-.ansi-red-fg { color: #E75C58; }
-.ansi-red-bg { background-color: #E75C58; }
-.ansi-red-intense-fg { color: #B22B31; }
-.ansi-red-intense-bg { background-color: #B22B31; }
-.ansi-green-fg { color: #00A250; }
-.ansi-green-bg { background-color: #00A250; }
-.ansi-green-intense-fg { color: #007427; }
-.ansi-green-intense-bg { background-color: #007427; }
-.ansi-yellow-fg { color: #DDB62B; }
-.ansi-yellow-bg { background-color: #DDB62B; }
-.ansi-yellow-intense-fg { color: #B27D12; }
-.ansi-yellow-intense-bg { background-color: #B27D12; }
-.ansi-blue-fg { color: #208FFB; }
-.ansi-blue-bg { background-color: #208FFB; }
-.ansi-blue-intense-fg { color: #0065CA; }
-.ansi-blue-intense-bg { background-color: #0065CA; }
-.ansi-magenta-fg { color: #D160C4; }
-.ansi-magenta-bg { background-color: #D160C4; }
-.ansi-magenta-intense-fg { color: #A03196; }
-.ansi-magenta-intense-bg { background-color: #A03196; }
-.ansi-cyan-fg { color: #60C6C8; }
-.ansi-cyan-bg { background-color: #60C6C8; }
-.ansi-cyan-intense-fg { color: #258F8F; }
-.ansi-cyan-intense-bg { background-color: #258F8F; }
-.ansi-white-fg { color: #C5C1B4; }
-.ansi-white-bg { background-color: #C5C1B4; }
-.ansi-white-intense-fg { color: #A1A6B2; }
-.ansi-white-intense-bg { background-color: #A1A6B2; }
-
-.ansi-bold { font-weight: bold; }
-
-    </style>
 
 
 <style type="text/css">
@@ -13135,18 +13096,18 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import libraries</span>
-<span class="kn">from</span> <span class="nn">pyspark</span> <span class="k">import</span> <span class="n">SparkContext</span><span class="p">,</span> <span class="n">SparkConf</span>
-<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="k">import</span> <span class="n">SparkSession</span>
-<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="k">import</span> <span class="n">udf</span><span class="p">,</span> <span class="n">split</span><span class="p">,</span> <span class="n">col</span>
+<span class="kn">from</span> <span class="nn">pyspark</span> <span class="kn">import</span> <span class="n">SparkContext</span><span class="p">,</span> <span class="n">SparkConf</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">udf</span><span class="p">,</span> <span class="n">split</span><span class="p">,</span> <span class="n">col</span>
 
-<span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="k">import</span> <span class="n">LogisticRegression</span><span class="p">,</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">GBTClassifier</span>
-<span class="kn">from</span> <span class="nn">pyspark.ml.evaluation</span> <span class="k">import</span> <span class="n">MulticlassClassificationEvaluator</span>
-<span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="k">import</span> <span class="n">VectorAssembler</span><span class="p">,</span> <span class="n">StandardScaler</span>
-<span class="kn">from</span> <span class="nn">pyspark.ml.tuning</span> <span class="k">import</span> <span class="n">CrossValidator</span><span class="p">,</span> <span class="n">ParamGridBuilder</span>
+<span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">LogisticRegression</span><span class="p">,</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">GBTClassifier</span>
+<span class="kn">from</span> <span class="nn">pyspark.ml.evaluation</span> <span class="kn">import</span> <span class="n">MulticlassClassificationEvaluator</span>
+<span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="kn">import</span> <span class="n">VectorAssembler</span><span class="p">,</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">pyspark.ml.tuning</span> <span class="kn">import</span> <span class="n">CrossValidator</span><span class="p">,</span> <span class="n">ParamGridBuilder</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">time</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
@@ -14074,8 +14035,8 @@ only showing top 5 rows
 <div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># some solutions and inspirations from </span>
-<span class="c1">#  https://github.com/fxzero/Sparkify-Project and here https://github.com/linpingyu/Sparkify</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># inspirations for the process flow and using .toPandas() for plotting from https://github.com/fxzero/Sparkify-Project</span>
+<span class="c1"># and here https://github.com/linpingyu/Sparkify</span>
 
 <span class="c1"># songs</span>
 <span class="n">songs</span> <span class="o">=</span> <span class="n">df_c</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s1">&#39;page == &quot;NextSong&quot;&#39;</span><span class="p">)</span> \
@@ -14247,10 +14208,7 @@ only showing top 5 rows
 <div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># some solutions and inspirations from </span>
-<span class="c1">#  https://github.com/fxzero/Sparkify-Project and here https://github.com/linpingyu/Sparkify</span>
-
-<span class="c1"># songs listened</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># songs listened</span>
 <span class="n">songs_listened</span> <span class="o">=</span> <span class="n">df_c</span> \
     <span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;userId&#39;</span><span class="p">,</span><span class="s1">&#39;song&#39;</span><span class="p">,</span> <span class="s1">&#39;churn&#39;</span><span class="p">)</span> \
     <span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s1">&#39;userId&#39;</span><span class="p">,</span> <span class="s1">&#39;churn&#39;</span><span class="p">)</span> \
@@ -14446,7 +14404,6 @@ only showing top 5 rows
 <li>Try your script on the full data set, debugging your script if necessary</li>
 </ul>
 <p>If you are working in the classroom workspace, you can just extract features based on the small subset of data contained here. Be sure to transfer over this work to the larger dataset when you work on your Spark cluster.</p>
-<p>For teh following section I used # some solutions and inspirations from <a href="https://github.com/fxzero/Sparkify-Project">https://github.com/fxzero/Sparkify-Project</a> and <a href="https://github.com/linpingyu/Sparkify">https://github.com/linpingyu/Sparkify</a></p>
 
 </div>
 </div>
@@ -14658,7 +14615,7 @@ only showing top 5 rows
 <div class="prompt input_prompt">In&nbsp;[104]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Merge to one dataframe </span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Merge to one dataframe - solution found here https://github.com/linpingyu/Sparkify</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">gender_feature</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">total_songs_feature</span><span class="p">,</span><span class="s1">&#39;userId&#39;</span><span class="p">,</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span> \
     <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">added_friends_feature</span><span class="p">,</span><span class="s1">&#39;userId&#39;</span><span class="p">,</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span> \
     <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">thumbs_up_feature</span><span class="p">,</span><span class="s1">&#39;userId&#39;</span><span class="p">,</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span> \
@@ -15315,7 +15272,7 @@ Accuracy: 0.8181818181818182
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The best models reached a f1-score of 0.7 and accuracy of 70 % for the test and a f1-score of 0,73 and an accuracy of about 70 % for the validation set. This also means, the model has a huge potential to improve. 
+<p>The best models reached a f1-score of about 0.7 and accuracy of 64,7 % for the test and a f1-score of 0,77 and an accuracy of about 81 % for the validation set. This also means, the model has a potential to improve. 
 At least there are some obvious points to improve:</p>
 <ul>
 <li>the number of features considered could be enhanced e.g. the states or the downgrade aspect</li>
