@@ -30,5 +30,6 @@ The results are provided in the jupyter notebook and as a post [here](https://me
 ### Licensing, Authors, and Acknowledgements <a name="licensing"></a>
 For this I have to give credit to Udacity to provide me the necessary data and especially inspiring examples within their extracurricular Spark course. 
 Furthermore I have to give credit to some inspiring people who already found solutions to several tasks. Especially to
-Bruce Zhu [here](https://github.com/fxzero/Sparkify-Project) and Linping Yu [here](https://github.com/linpingyu/Sparkify) and also to the following link:
+Bruce Zhu [here](https://github.com/fxzero/Sparkify-Project) and Linping Yu [here](https://github.com/linpingyu/Sparkify) and also to the following links:
 https://mapr.com/blog/churn-prediction-pyspark-using-mllib-and-ml-packages/
+https://spark.apache.org/docs/2.2.0/ml-classification-regression.html#logistic-regression
